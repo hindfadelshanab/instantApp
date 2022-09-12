@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480323283632",
+    "project_id": "instantapp-1fd66",
+    "storage_bucket": "instantapp-1fd66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480323283632:android:85268cc12ed8ccdcb32975",
+        "android_client_info": {
+          "package_name": "com.hinddev.pdf.o37i.instantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480323283632-op3uerpkq1ct6buauhni92tji1c5lius.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGEovFx1KBamawHangMg2VqtMfVux6l_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480323283632-op3uerpkq1ct6buauhni92tji1c5lius.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
