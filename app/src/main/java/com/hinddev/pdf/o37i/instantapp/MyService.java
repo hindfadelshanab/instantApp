@@ -20,17 +20,18 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String input = intent.getStringExtra("inputExtra");
+        String input = intent.getStringExtra("orderDetails");
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Example Service")
+                .setContentTitle("FOODQMS")
                 .setContentText(input)
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .build();
 
         startForeground(1, notification);

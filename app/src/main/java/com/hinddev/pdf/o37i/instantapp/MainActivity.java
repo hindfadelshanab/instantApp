@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            handleDeepLink(intent);
+//            handleDeepLink(intent);
         }
 
         String link=null;
@@ -44,22 +44,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent != null) {
-            handleDeepLink(intent);
+//            handleDeepLink(intent);
         }
     }
-    private void handleDeepLink(Intent intent) {
-        FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(pendingDynamicLinkData -> {
-            if (pendingDynamicLinkData != null) {
-                Uri deepLink = pendingDynamicLinkData.getLink();
-                if (deepLink != null) {
-                    Log.d("TAG", "onSuccess: "+ deepLink);
-
-
-                }
-                Log.d("TAG", "onSuccess: "+ deepLink);
-
-
-            }
-        });
-    }
+//    private void handleDeepLink(Intent intent) {
+//        FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(pendingDynamicLinkData -> {
+//            if (pendingDynamicLinkData != null) {
+//                Uri deepLink = pendingDynamicLinkData.getLink();
+//                if (deepLink != null) {
+////                    Log.d("TAG", "onSuccess: "+ deepLink);
+//
+//
+//                }
+////                Log.d("TAG", "onSuccess: "+ deepLink);
+//
+//
+//            }
+//        });
+//    }
 }

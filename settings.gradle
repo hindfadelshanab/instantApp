@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "InstantApp"
 include ':app'
+
+include ':instant_faeture'
+//include ':order_instant_feature'
