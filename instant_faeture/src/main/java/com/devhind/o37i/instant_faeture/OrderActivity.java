@@ -1,14 +1,19 @@
 package com.devhind.o37i.instant_faeture;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.verify.domain.DomainVerificationManager;
+import android.content.pm.verify.domain.DomainVerificationUserState;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,15 +37,25 @@ import com.hinddev.pdf.o37i.instantapp.adapter.OrderAdapter;
 import com.hinddev.pdf.o37i.instantapp.listener.OnOrderReadyListener;
 import com.hinddev.pdf.o37i.instantapp.model.Order;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
+
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 
 public class OrderActivity extends AppCompatActivity implements OnOrderReadyListener {
 
     RecyclerView recyclerView;
     private MediaPlayer mediaPlayer;
 
-    public String orderUri = "https://www.examplehind.com/?orderId=2";
+    public String orderUri = "https://wiz-tech.co/?orderId=2";
 
     ArrayList<Order> orders = new ArrayList<>();
     OrderAdapter orderAdapter;
@@ -48,11 +63,15 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
     ActivityOrderBinding binding;
     private Query mQuery;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityOrderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+//        Branch.getAutoInstance(this);
+
         if (InstantApps.getPackageManagerCompat(this).isInstantApp()) {
             Log.d("TAG", "onCreate: yess ");
 //            Toast.makeText(this, "this is Instant App", Toast.LENGTH_SHORT).show();
@@ -60,6 +79,9 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
         }
 
         showInstantsInstall();
+
+
+        //
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -99,21 +121,20 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
         Uri appLinkData = appLinkIntent.getData();
 
         if (appLinkData != null) {
-//            Log.d("TAG", "onCreate: " + appLinkData.toString());
+            Log.d("TAG", "onCreate: " + appLinkData.toString());
 
-//            if (id != null)
-//                getOrder(id);
-//           Log.d("TAG", "appLinkData param: " +   appLinkData.getQueryParameter("orderId"));
+
+            Log.d("TAG", "appLinkData param: " + appLinkData.getQueryParameter("orderId"));
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null) {
-            handleDeepLink(intent);
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        if (intent != null) {
+//            handleDeepLink(intent);
+//        }
+//    }
 
     private void handleDeepLink(Intent intent) {
         FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(pendingDynamicLinkData -> {
@@ -124,7 +145,8 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
 
 //                    Log.d("TAG", "getRedirectUrl: " + pendingDynamicLinkData.getRedirectUrl());
                     String id = deepLink.getQueryParameter("orderId");
-               getOrder(id);
+
+                    getOrder(id);
 //
 //                    Log.d("TAG", "handleDeepLink: " + id);
 //                    Log.d("TAG", "handleDeepLink: " + deepLink);
@@ -277,7 +299,7 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
 //                    }
 //                });
 
-//    private  void  addOrder(String id)
+    //    private  void  addOrder(String id)
 //    {
 //        Query  query  = FirebaseFirestore.getInstance().collection("Order");
 //
@@ -289,17 +311,72 @@ public class OrderActivity extends AppCompatActivity implements OnOrderReadyList
 //        binding.orderRv.setLayoutManager(new LinearLayoutManager(OrderActivity.this));
 //
 //    }
-private void showInstantsInstall() {
-    if (InstantApps.getPackageManagerCompat(this).isInstantApp()) {
+    private void showInstantsInstall() {
+        if (InstantApps.getPackageManagerCompat(this).isInstantApp()) {
 
 
-        binding.btnInstall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent postInstall = new Intent();
-                InstantApps.showInstallPrompt(OrderActivity.this, postInstall, 100, "");
-            }
-        });
+            binding.btnInstall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent postInstall = new Intent();
+                    InstantApps.showInstallPrompt(OrderActivity.this, postInstall, 100, "");
+                }
+            });
+        }
     }
-}
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Branch init
+        Branch.sessionBuilder(this).withCallback(new Branch.BranchReferralInitListener() {
+            @Override
+            public void onInitFinished(JSONObject referringParams, BranchError error) {
+                if (error == null) {
+                    Log.i("BRANCH SDK", referringParams.toString());
+                    try {
+                       String deepLink = referringParams.getString("$android_deeplink_path");
+                        Uri uri = Uri.parse(deepLink);
+                        String paramValue = uri.getQueryParameter("orderId");
+                        if (paramValue!=null){
+                            getOrder(paramValue);
+
+                        }
+//                        Log.i("BRANCH SDK $android_deeplink_path",  referringParams.getString("$android_deeplink_path"));
+//                        Log.i("BRANCH SDK paramValue",  paramValue);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Retrieve deeplink keys from 'referringParams' and evaluate the values to determine where to route the user
+                    // Check '+clicked_branch_link' before deciding whether to use your Branch routing logic
+                } else {
+                    Toast.makeText(OrderActivity.this, "error :" +error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i("BRANCH SDK", error.getMessage());
+                }
+            }
+        }).init();
+//        Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
+//            @Override
+//            public void onInitFinished(JSONObject referringParams, BranchError error) {
+//                if (error == null) {
+//                    Log.i("BRANCH SDK", referringParams.toString());
+//                    // Retrieve deeplink keys from 'referringParams' and evaluate the values to determine where to route the user
+//                    // Check '+clicked_branch_link' before deciding whether to use your Branch routing logic
+//                } else {
+//                    Log.i("BRANCH SDK", error.getMessage());
+//                }
+//            }
+//        }, this.getIntent().getData(), this);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        this.setIntent(intent);
+
+    }
 }

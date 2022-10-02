@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.devhind.o37i.instant_faeture">
+
+    <dist:module dist:instant="true">
+        <dist:fusing dist:include="true" />
+
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+    </dist:module>
+
+    <application android:icon="@mipmap/ic_launcher">
+
+        <activity
+            android:name=".OrderActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.InstantApp">
+                        <meta-data
+                            android:name="default-url"
+                            android:value="https://7sv0j.app.link/qms" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+            <!--            <intent-filter>-->
+            <!--                &lt;!&ndash; If utilizing $deeplink_path please explicitly declare your hosts, or utilize a wildcard(*) &ndash;&gt;-->
+            <!--                <data android:scheme="foodqms" android:host="open" />-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--            </intent-filter>-->
+
+            <!-- Branch App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="7sv0j.app.link" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="7sv0j.app.link" />
+            </intent-filter>
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data-->
+<!--                    android:scheme="http"-->
+<!--                    android:host="7sv0j.app.link" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data-->
+<!--                    android:scheme="http"-->
+<!--                    android:host="7sv0j.app.link" />-->
+<!--            </intent-filter>-->
+
+            <!--            <intent-filter android:autoVerify="true">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <data android:scheme="https" android:host="7sv0j.test-app.link" />-->
+            <!--                <data android:scheme="http" android:host="7sv0j.test-app.link" />-->
+            <!--                &lt;!&ndash; example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  &ndash;&gt;-->
+            <!--&lt;!&ndash;                <data android:scheme="https" android:host="7sv0j-alternate.test-app.link" />&ndash;&gt;-->
+            <!--&lt;!&ndash;                <data android:scheme="http" android:host="7sv0j-alternate.test-app.link" />&ndash;&gt;-->
+            <!--            </intent-filter>-->
+            <!--            <meta-data-->
+            <!--                android:name="default-url"-->
+            <!--                android:value="https://wiz-tech.co/qms/" />-->
+
+            <!--            <intent-filter android:order="1" android:autoVerify="true">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+            <!--                <data-->
+            <!--                    android:scheme="http"-->
+            <!--                    android:host="wiz-tech.co"-->
+            <!--                    android:pathPrefix="/qms/"-->
+            <!--                    />-->
+            <!--            </intent-filter>-->
+            <!--            <intent-filter android:order="1" android:autoVerify="true">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+            <!--                <data-->
+            <!--                    android:scheme="https"-->
+            <!--                    android:host="wiz-tech.co"-->
+            <!--                    android:pathPrefix="/qms/"-->
+
+            <!--                    />-->
+            <!--            </intent-filter>-->
+        </activity>
+
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_ik1Zqyts3FUNuxEorm5Y8alhEDm0duRA" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="secret_live_SW4HhHdVfULOT2mrKYbjwJwY39NNnkIw" />
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+
+    </application>
+
+</manifest>

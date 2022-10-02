@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 32
-        versionCode 23
+        versionCode 1202
         versionName "1.0"
         applicationId "com.hinddev.pdf.o37i.instantapp"
         vectorDrawables.useSupportLibrary = true
@@ -54,6 +54,9 @@ dependencies {
     api "com.google.android.gms:play-services-instantapps:18.0.1"
 
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    api 'io.branch.sdk.android:library:5.0.15'
+    api 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+
 
     // Add the dependencies for the Dynamic Links and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies

@@ -23,6 +23,8 @@ public class MyService extends Service {
         String input = intent.getStringExtra("orderDetails");
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.putExtra("branch","https://7sv0j.app.link/qms");
+        notificationIntent.putExtra("branch_force_new_session",true);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FOODQMS</string>
+  <string name="content_text">To jest funkcja instant załadowana poprzez url.</string>
+    <string name="install_lbl_btn">INSTALL</string>
+<!--    <string name="asset_statements">-->
+<!--[-->
+<!--  {-->
+<!--    "relation": ["delegate_permission/common.handle_all_urls"],-->
+<!--    "target": {-->
+<!--      "namespace": "android_app",-->
+<!--      "package_name": "com.hinddev.pdf.o37i.instantapp",-->
+<!--      "sha256_cert_fingerprints":-->
+<!--        ["F0:ED:B9:D6:84:82:CE:7E:7A:FB:C4:DC:56:F7:89:C0:81:1E:D9:76:87:25:33:22:5D:56:78:74:53:CF:A2:83"]-->
+<!--    }-->
+<!--  }-->
+<!--]-->
+<!--  </string>-->
+    <string name="title_instant_faeture">instant_feature</string>
+</resources>
